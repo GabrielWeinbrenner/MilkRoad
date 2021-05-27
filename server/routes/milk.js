@@ -1,7 +1,41 @@
 var express = require("express");
 var router = express.Router();
-// var db = require("../models/");
-var state = [];
+require("dotenv").config();
+
+const fs = require("fs");
+const tmp = require("tmp");
+const AWS = require("aws-sdk");
+const ID = process.env.id;
+const SECRET = process.env.secret;
+const BUCKET_NAME = "milkroad";
+const s3 = new AWS.S3({
+    accessKeyId: ID,
+    secretAccessKey: SECRET,
+});
+const uploadFile = (fileName, key) => {
+    const fileContent = fs.readFileSync(fileName);
+    console.log(fileContent);
+    const params = {
+        Bucket: BUCKET_NAME,
+        Key: key,
+        Body: fileContent,
+    };
+    s3.upload(params, function (err, data) {
+        console.log(data);
+        if (err) {
+            throw err;
+        }
+        console.log(`File uploaded successfully. ${data.Location}`);
+    });
+};
+var state = [
+    {
+        name: "choco",
+        description: "asdfasfasfa",
+        price: 102,
+        sellerAddress: "5 tolen",
+    },
+];
 router.get("/", function (req, res) {
     res.json(state);
 });
@@ -20,9 +54,19 @@ router.get("/:name", function (req, res) {
 });
 router.post("/", function (req, res) {
     var milk = req.body;
-    state.push(milk);
-    console.log(state);
-    res.json({ res: "success" });
+    tmp.file(function _tempFileCreated(err, path, fd, cleanupCallback) {
+        if (err) throw err;
+        console.log("File: ", path);
+        console.log("Filedescriptor: ", fd);
+        state.push(milk);
+        json = JSON.stringify(milk);
+        fs.writeFileSync("./foo.json", json);
+        uploadFile("foo.json", milk.name);
+        console.log(state);
+        res.json({ res: "success" });
+
+        cleanupCallback();
+    });
 });
 
 module.exports = router;

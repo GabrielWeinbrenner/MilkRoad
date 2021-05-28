@@ -27,61 +27,69 @@ function ProductForm(props) {
         history.go(0);
     }
     return (
-        <Grid
-            container
-            direction="column"
-            alignItems="center"
-            justify="space-between"
-        >
+        <>
             <Grid item>
-                <Typography variant="h2">Post a product!</Typography>
+                <Typography align="center" variant="h2">
+                    Post a product!
+                </Typography>
             </Grid>
             <form onSubmit={submit}>
-                <Grid item style={{ margin: 10 }}>
-                    <TextField
-                        id="outlined-required"
-                        label="name"
-                        variant="outlined"
-                        value={product.name}
-                        onChange={(e) => {
-                            changeProduct(e, "name");
-                        }}
-                    />
-                </Grid>
-                <Grid item style={{ margin: 10 }}>
-                    <TextField
-                        id="outlined-required"
-                        label="description"
-                        variant="outlined"
-                        value={product.description}
-                        onChange={(e) => changeProduct(e, "description")}
-                    />
-                </Grid>
-                <Grid item style={{ margin: 10 }}>
-                    <TextField
-                        id="outlined-required"
-                        label="price"
-                        variant="outlined"
-                        value={product.price}
-                        onChange={(e) => changeProduct(e, "price")}
-                    />
-                </Grid>
-                <Grid item style={{ margin: 10 }}>
-                    <TextField
-                        id="outlined-required"
-                        label="address"
-                        variant="outlined"
-                        value={product.sellerAddress}
-                        onChange={(e) => changeProduct(e, "sellerAddress")}
-                    />
-                </Grid>
-                <Grid item>
-                    <Button variant="contained" color="primary" type="submit">
-                        Submit
-                    </Button>
+                <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                    justify="space-between"
+                >
+                    <Grid item style={{ margin: 10 }}>
+                        <TextField
+                            id="outlined-required"
+                            label="name"
+                            variant="outlined"
+                            value={product.name}
+                            onChange={(e) => {
+                                changeProduct(e, "name");
+                            }}
+                        />
+                    </Grid>
+                    <Grid item style={{ margin: 10 }}>
+                        <TextField
+                            id="outlined-required"
+                            label="description"
+                            variant="outlined"
+                            value={product.description}
+                            onChange={(e) => changeProduct(e, "description")}
+                        />
+                    </Grid>
+                    <Grid item style={{ margin: 10 }}>
+                        <TextField
+                            id="outlined-required"
+                            label="price"
+                            variant="outlined"
+                            value={product.price}
+                            onChange={(e) => changeProduct(e, "price")}
+                        />
+                    </Grid>
+                    <Grid item style={{ margin: 10 }}>
+                        <TextField
+                            id="outlined-required"
+                            label="address"
+                            variant="outlined"
+                            value={product.sellerAddress}
+                            onChange={(e) => changeProduct(e, "sellerAddress")}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
+                    </Grid>
                 </Grid>
             </form>
-        </Grid>
+        </>
     );
 }
 

@@ -14,18 +14,16 @@ const s3 = new AWS.S3({
 });
 const uploadFile = (fileName, key) => {
     const fileContent = fs.readFileSync(fileName);
-    console.log(fileContent);
     const params = {
         Bucket: BUCKET_NAME,
         Key: key,
         Body: fileContent,
     };
     s3.upload(params, function (err, data) {
-        console.log(data);
         if (err) {
             throw err;
         }
-        console.log(`File uploaded successfully. ${data.Location}`);
+        return data.location;
     });
 };
 var state = [
@@ -61,9 +59,9 @@ router.post("/", function (req, res) {
         state.push(milk);
         json = JSON.stringify(milk);
         fs.writeFileSync("./foo.json", json);
-        uploadFile("foo.json", milk.name);
-        console.log(state);
-        res.json({ res: "success" });
+        let url = uploadFile("foo.json", milk.name);
+
+        res.json({ res: url });
 
         cleanupCallback();
     });

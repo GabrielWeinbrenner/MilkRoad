@@ -1,19 +1,24 @@
 import { TextField, Typography, Grid, Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-
+import { ChromePicker } from "react-color";
 function ProductForm(props) {
     const [product, setProduct] = useState({
         name: "",
         description: "",
         price: 0,
         sellerAddress: "",
+        color: "",
     });
     let history = useHistory();
 
     function changeProduct(event, diff) {
-        product[diff] = event.target.value;
-        setProduct({ ...product });
+        if (diff == "color") {
+            product[diff] = event.hex;
+        } else {
+            product[diff] = event.target.value;
+        }
+        setProduct({ ...product });    
     }
     function submit(event) {
         fetch(`http://localhost:3001/milk/`, {
@@ -76,6 +81,12 @@ function ProductForm(props) {
                             variant="outlined"
                             value={product.sellerAddress}
                             onChange={(e) => changeProduct(e, "sellerAddress")}
+                        />
+                    </Grid>
+                    <Grid item style={{ margin: 10 }}>
+                        <ChromePicker
+                            color={product.color}
+                            onChangeComplete={(e) => changeProduct(e, "color")}
                         />
                     </Grid>
                     <Grid item>

@@ -19,7 +19,6 @@ const useStyles = makeStyles(() => ({
 function Milk(props) {
     const classes = useStyles();
     const [milk, setMilk] = useState(null);
-    console.log("mIlk");
     useEffect(() => {
         setMilk(
             <svg

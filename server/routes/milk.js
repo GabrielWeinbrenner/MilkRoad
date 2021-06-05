@@ -2,8 +2,6 @@ var express = require("express");
 var router = express.Router();
 require("dotenv").config();
 
-
-
 var state = [
     {
         name: "choco",
@@ -17,7 +15,7 @@ var state = [
         description: "asdfasfasfa",
         price: 102,
         sellerAddress: "5 tolen",
-        color: "#0000ff",
+        color: "#ff00ff",
     },
 ];
 router.get("/", function (req, res) {
@@ -42,16 +40,15 @@ router.post("/", function (req, res) {
         sellerAddress: req.params.address,
         color: req.params.color,
     };
-    state.append(milk);
+    state.push(req.body);
     res.json({ res: "success" });
-    
 });
 
-router.post("/splice", function(req,res){
+router.post("/splice", function (req, res) {
     var milkOne = req.params.one;
     var milkTwo = req.params.two;
-
-
 });
+
+router.post("/");
 
 module.exports = router;

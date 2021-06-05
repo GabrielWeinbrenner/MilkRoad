@@ -13,7 +13,7 @@ function colorizer() {
 }
 function Landing() {
     const [products, setProducts] = useState(null);
-
+    
     useEffect(() => {
         fetch(`http://localhost:3001/milk/`).then((d) =>
             d.json().then((fin) => {
@@ -25,47 +25,50 @@ function Landing() {
     return (
         <Grid container direction="column" justify="center" alignItems="center">
             <Grid item>
-                <Typography variant="h2">The Milk Road</Typography>
+                <Typography variant="h2" gutterBottom>
+                    The Milk Road
+                </Typography>
             </Grid>
             <Grid item>
-                <Grid container direction="column">
+                <Grid container spacing={3}>
                     {products != null ? (
                         products.map((product, i) => {
                             return (
-                                <>
+                                <Grid item xs={12} md={6}>
                                     <ProductView
                                         key={i}
                                         name={product.name}
                                         description={product.description}
                                         price={product.price}
                                         sellerAddress={product.sellerAddress}
-                                        color={colorizer()}
+                                        color={product.color}
                                     />
-                                </>
+                                </Grid>
                             );
                         })
                     ) : (
-                        <Grid
-                            container
-                            direction="column"
-                            justify="center"
-                            alignItems="center"
-                        >
-                            <Grid item style={{ margin: "2em" }}>
-                                <Typography variant="h4" href="/productform">
-                                    Add products
-                                </Typography>
-                            </Grid>
-                            <Grid item style={{ margin: "0.2em" }}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    href="/productform"
-                                >
-                                    To Product Form
-                                </Button>
-                            </Grid>
-                        </Grid>
+                         <Grid
+                             container
+                             direction="column"
+                             justify="center"
+                             alignItems="center"
+                         >
+                             <Grid item style={{ margin: "2em" }}>
+                                 <Typography variant="h4" href="/productform">
+                                     Add products
+                                 </Typography>
+                             </Grid>
+                             <Grid item style={{ margin: "0.2em" }}>
+                                 <Button
+                                     variant="contained"
+                                     color="primary"
+                                     href="/productform"
+                                 >
+                                     To Product Form
+                                 </Button>
+                             </Grid>
+                         </Grid>
+                       
                     )}
                 </Grid>
             </Grid>

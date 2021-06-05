@@ -5,14 +5,14 @@ const useStyles = makeStyles(() => ({
     st0: {
         fill: "#ffffff",
         stroke: "#000000",
-        strokeWidth: 8,
-        strokeMiterlimit: 10,
+        strokeWidth: 20,
+        strokeMiterlimit: 22,
     },
     st1: {
         fill: "#000000",
         stroke: "#000000",
-        strokeWidth: 8,
-        strokeMiterlimit: 10,
+        strokeWidth: 20,
+        strokeMiterlimit: 22,
     },
 }));
 
@@ -70,8 +70,8 @@ function Milk(props) {
                     style={{
                         fill: props.color,
                         stroke: "#000000",
-                        strokeWidth: 8,
-                        strokeMiterlimit: 10,
+                        strokeWidth: 20,
+                        strokeMiterlimit: 22,
                     }}
                     d="M21.33,239.09c-0.22-3.07,1.45-5.96,4.23-7.29h0l4.59-2.21l4.59-2.21l4.59-2.21l4.59-2.21l4.59-2.21l4.59-2.21
             h0c2.97-1.43,6.34-1.77,9.54-0.96l3.83,0.96l8.77,2.21l8.77,2.21l8.77,2.21l8.77,2.21l8.77,2.21l8.77,2.21h0

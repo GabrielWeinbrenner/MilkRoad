@@ -3,7 +3,11 @@ import { Grid, Typography } from "@material-ui/core";
 function Profile(props) {
     const [profile, setProfile] = useState(null);
     useEffect(() => {
-        fetch("http://localhost:3001/profile/" + props.name, function (res) {});
+        fetch("http://localhost:3001/profile/" + props.name).then((d) =>
+            d.json().then((profileData) => {
+                setProfile(profileData);
+            })
+        );
     }, []);
     return (
         <Grid container direction="row">

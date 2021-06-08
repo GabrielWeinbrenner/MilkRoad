@@ -37,11 +37,7 @@ function Landing() {
                                 <Grid item xs={12} md={6}>
                                     <ProductView
                                         key={i}
-                                        name={product.name}
-                                        description={product.description}
-                                        price={product.price}
-                                        sellerAddress={product.sellerAddress}
-                                        color={product.color}
+                                        product = {product}
                                     />
                                 </Grid>
                             );
@@ -55,7 +51,7 @@ function Landing() {
                          >
                              <Grid item style={{ margin: "2em" }}>
                                  <Typography variant="h4" href="/productform">
-                                     Add products
+                                    Add Products
                                  </Typography>
                              </Grid>
                              <Grid item style={{ margin: "0.2em" }}>

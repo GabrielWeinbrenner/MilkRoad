@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Landing from "./pages/Landing";
 import Product from "./pages/Product";
 import ProductForm from "./pages/ProductForm";
+import Splice from "./pages/Splice";
 
 // import theme from "./ui/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
@@ -23,6 +24,7 @@ function App() {
                     path="/productform/"
                     render={() => <ProductForm />}
                 />
+                <Route path="/splice/:name" component={Splice} />
             </Switch>
         </BrowserRouter>
         // </ThemeProvider>

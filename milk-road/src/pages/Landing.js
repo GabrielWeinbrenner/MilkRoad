@@ -13,16 +13,16 @@ function colorizer() {
     return color;
 }
 
-function Landing() {
+function Landing(props) {
     const [products, setProducts] = useState(null);
-    useEffect(async () => {
-        fetch(`http://localhost:3001/milk/`).then((d) =>
+    useEffect(() => {
+        /*    fetch(`http://localhost:3001/milk/`).then((d) =>
             d.json().then((fin) => {
                 setProducts(fin);
             })
-        );
+        ); */
+        console.log(props.milk);
     }, []);
-
     return (
         <Grid container direction="column" justify="center" alignItems="center">
             <Grid item>
@@ -32,8 +32,9 @@ function Landing() {
             </Grid>
             <Grid item>
                 <Grid container spacing={3}>
-                    {products != null ? (
-                        products.map((product, i) => {
+                    {true ? (
+                        props.milk.map((product, i) => {
+                            console.log(product);
                             return (
                                 <Grid item xs={12} md={6}>
                                     <ProductView key={i} product={product} />

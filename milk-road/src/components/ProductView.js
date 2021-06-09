@@ -9,12 +9,12 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Milk from "../components/Milk";
-function ProductView({ product }) {
+function ProductView({ product, color }) {
     let history = useHistory();
     function redirect(name) {
         history.push(`/${name}`);
     }
-    if (product != null) {
+    if (true) {
         return (
             <Card
                 style={{
@@ -26,6 +26,7 @@ function ProductView({ product }) {
             >
                 <CardContent>
                     <Grid container direction="row" justify="space-between">
+                                                
                         <Grid item>
                             <Grid container direction="column">
                                 <Grid item>
@@ -56,6 +57,7 @@ function ProductView({ product }) {
                                 </Grid>
                             </Grid>
                         </Grid>
+                         
                         <Grid item>
                             {/* <img src={milk} width={100} /> */}
                             <div style={{ width: 100 }}>

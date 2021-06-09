@@ -26,6 +26,9 @@ async function loadWeb3() {
 }
 function App() {
     const [account, setAccount] = useState(null);
+    const [savedContract, setContract] = useState(null);
+    const [totalSupply, setTotalSupply] = useState(0);
+    const [allMilks, setMilks] = useState([]);
     async function loadBlockchainData() {
         const web3 = window.web3;
         // Load account
@@ -37,20 +40,23 @@ function App() {
         if (networkData) {
             const abi = Milk.abi;
             const address = networkData.address;
-            const contract = new web3.eth.Contract(abi, address);
-            console.log(abi);
-            console.log(address);
+            const contract = await new web3.eth.Contract(abi, address);
             console.log(contract);
-            //      this.setState({ contract });
-            //     const totalSupply = await contract.methods.totalSupply().call();
-            //       this.setState({ totalSupply });
-            // Load Colors
-            //    for (var i = 1; i <= totalSupply; i++) {
-            //       const color = await contract.methods.colors(i - 1).call();
-            //      this.setState({
-            //         colors: [...this.state.colors, color],
-            //    });
-            // }
+            await setContract(contract);
+            const ts = await contract.methods.totalSupply().call();
+            console.log(ts);
+            setTotalSupply(ts);
+
+            const c = await contract.methods;
+//            await c
+//                .mint("drank", "purple", "#ff00ff", 10)
+//                .send({ from: account });
+
+            for (var i = 1; i <= ts; i++) {
+                const milk = await contract.methods.milks(i - 1).call();
+                console.log(milk);
+                setMilks((state) => [...state, milk]);
+            }
         } else {
             window.alert("Smart contract not deployed to detected network.");
         }
@@ -59,7 +65,6 @@ function App() {
     useEffect(async () => {
         await loadWeb3();
         await loadBlockchainData();
-        console.log(account);
     }, []);
 
     return (
@@ -67,11 +72,17 @@ function App() {
         <BrowserRouter>
             <Header id={account} />
             <Switch>
-                <Route exact path="/" render={() => <Landing />} />
+                <Route
+                    exact
+                    path="/"
+                    contract={savedContract}
+                    render={() => <Landing milk={allMilks} />}
+                />
                 <Route path="/product/:name" component={Product} />
                 <Route
                     exact
                     path="/productform/"
+                    contract={savedContract}
                     render={() => <ProductForm />}
                 />
                 <Route path="/splice/:name" component={Splice} />

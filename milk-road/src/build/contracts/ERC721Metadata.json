@@ -39436,7 +39436,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-06-09T02:24:05.357Z",
+  "updatedAt": "2021-06-09T02:51:48.248Z",
   "devdoc": {
     "methods": {
       "approve(address,uint256)": {

@@ -2,6 +2,7 @@ import { Button, Grid, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import ProductView from "../components/ProductView";
 import Milk from "../components/Milk";
+import Web3 from "web3";
 
 function colorizer() {
     var letters = "0123456789ABCDEF";
@@ -11,10 +12,10 @@ function colorizer() {
         color += letters[Math.floor(Math.random() * 16)];
     return color;
 }
+
 function Landing() {
     const [products, setProducts] = useState(null);
-    
-    useEffect(() => {
+    useEffect(async () => {
         fetch(`http://localhost:3001/milk/`).then((d) =>
             d.json().then((fin) => {
                 setProducts(fin);
@@ -35,36 +36,32 @@ function Landing() {
                         products.map((product, i) => {
                             return (
                                 <Grid item xs={12} md={6}>
-                                    <ProductView
-                                        key={i}
-                                        product = {product}
-                                    />
+                                    <ProductView key={i} product={product} />
                                 </Grid>
                             );
                         })
                     ) : (
-                         <Grid
-                             container
-                             direction="column"
-                             justify="center"
-                             alignItems="center"
-                         >
-                             <Grid item style={{ margin: "2em" }}>
-                                 <Typography variant="h4" href="/productform">
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                        >
+                            <Grid item style={{ margin: "2em" }}>
+                                <Typography variant="h4" href="/productform">
                                     Add Products
-                                 </Typography>
-                             </Grid>
-                             <Grid item style={{ margin: "0.2em" }}>
-                                 <Button
-                                     variant="contained"
-                                     color="primary"
-                                     href="/productform"
-                                 >
-                                     To Product Form
-                                 </Button>
-                             </Grid>
-                         </Grid>
-                       
+                                </Typography>
+                            </Grid>
+                            <Grid item style={{ margin: "0.2em" }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    href="/productform"
+                                >
+                                    To Product Form
+                                </Button>
+                            </Grid>
+                        </Grid>
                     )}
                 </Grid>
             </Grid>

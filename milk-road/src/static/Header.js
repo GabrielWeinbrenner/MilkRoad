@@ -55,7 +55,7 @@ function ElevationScroll(props) {
         elevation: trigger ? 4 : 0,
     });
 }
-const Header = () => {
+const Header = (props) => {
     const classes = useStyles();
     // const theme = useTheme();
 
@@ -93,8 +93,10 @@ const Header = () => {
                                 value="0"
                                 index={0}
                             />
+
                         </Tabs>
                     </Toolbar>
+                    <Typography variant="subtitle2">{props.id}</Typography>
                 </AppBar>
             </ElevationScroll>
             <div className={classes.toolbarMargin}></div>

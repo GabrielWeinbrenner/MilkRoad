@@ -2,11 +2,10 @@ var express = require("express");
 var router = express.Router();
 require("dotenv").config();
 const Milk = require("../models/milk.js");
-
+var blend_colors = import("../utils/blend.js");
 router.get("/", async function (req, res) {
     try {
         const milks = await Milk.find({});
-        console.log(milks);
         res.send(milks);
     } catch (e) {
         res.status(500).send();
@@ -26,6 +25,7 @@ router.get("/:name", async function (req, res) {
         res.status(500).send();
     }
 });
+
 router.post("/", async function (req, res) {
     const milk = new Milk(req.body);
     try {
@@ -39,8 +39,8 @@ router.post("/", async function (req, res) {
 router.post("/splice", function (req, res) {
     var milkOne = req.params.one;
     var milkTwo = req.params.two;
-
-    milkOne.color + milkTwo;
+    var finalColor = blend_colors(milkOne.color, milkTwo.color);
+    console.log(finalColor);
 });
 
 module.exports = router;

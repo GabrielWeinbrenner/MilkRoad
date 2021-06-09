@@ -7,7 +7,6 @@ function ProductForm(props) {
         name: "",
         description: "",
         price: 0,
-        sellerAddress: "",
         color: "",
     });
     let history = useHistory();
@@ -18,18 +17,19 @@ function ProductForm(props) {
         } else {
             product[diff] = event.target.value;
         }
-        setProduct({ ...product });    
+        setProduct({ ...product });
     }
     function submit(event) {
-        fetch(`http://localhost:3001/milk/`, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json",
-            },
-            body: JSON.stringify(product),
-        });
-        history.push("/");
-        history.go(0);
+        event.preventDefault();
+        props.mint(
+            props.account,
+            product.name,
+            product.description,
+            product.color,
+            product.price
+        );
+        // history.push("/");
+        // history.go(0);
     }
     return (
         <>
@@ -72,15 +72,6 @@ function ProductForm(props) {
                             variant="outlined"
                             value={product.price}
                             onChange={(e) => changeProduct(e, "price")}
-                        />
-                    </Grid>
-                    <Grid item style={{ margin: 10 }}>
-                        <TextField
-                            id="outlined-required"
-                            label="address"
-                            variant="outlined"
-                            value={product.sellerAddress}
-                            onChange={(e) => changeProduct(e, "sellerAddress")}
                         />
                     </Grid>
                     <Grid item style={{ margin: 10 }}>

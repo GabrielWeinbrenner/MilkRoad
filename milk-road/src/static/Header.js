@@ -90,8 +90,8 @@ const Header = (props) => {
                                 component={Link}
                                 to="/productform"
                                 label="Add"
-                                value="0"
-                                index={0}
+                                value="1"
+                                index={1}
                             />
 
                         </Tabs>

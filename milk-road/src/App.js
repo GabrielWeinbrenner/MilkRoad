@@ -29,9 +29,14 @@ function App() {
     const [savedContract, setContract] = useState(null);
     const [totalSupply, setTotalSupply] = useState(0);
     const [allMilks, setMilks] = useState([]);
+    async function _mint(account, name, desc, color, price) {
+        console.log("minting " + account + " " + name);
+        await savedContract.methods
+            .mint(name, desc, color, price)
+            .send({ from: account });
+    }
     async function loadBlockchainData() {
         const web3 = window.web3;
-        // Load account
         const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
         const networkId = await web3.eth.net.getId();
@@ -48,14 +53,13 @@ function App() {
             setTotalSupply(ts);
 
             const c = await contract.methods;
-//            await c
-//                .mint("drank", "purple", "#ff00ff", 10)
-//                .send({ from: account });
-
             for (var i = 1; i <= ts; i++) {
                 const milk = await contract.methods.milks(i - 1).call();
-                console.log(milk);
-                setMilks((state) => [...state, milk]);
+                const token = await contract.methods.tokenByIndex(i - 1).call();
+                const sellerAddress = await contract.methods
+                    .ownerOf(token)
+                    .call();
+                setMilks((state) => [...state, { ...milk, sellerAddress }]);
             }
         } else {
             window.alert("Smart contract not deployed to detected network.");
@@ -78,12 +82,18 @@ function App() {
                     contract={savedContract}
                     render={() => <Landing milk={allMilks} />}
                 />
-                <Route path="/product/:name" component={Product} />
+                <Route
+                    path="/product/:name"
+                    contract={savedContract}
+                    render={(props) => <Product {...props} contract={savedContract} milk={allMilks} />}
+                />
                 <Route
                     exact
                     path="/productform/"
                     contract={savedContract}
-                    render={() => <ProductForm />}
+                    render={() => (
+                        <ProductForm account={account} mint={_mint} />
+                    )}
                 />
                 <Route path="/splice/:name" component={Splice} />
             </Switch>

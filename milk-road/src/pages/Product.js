@@ -5,13 +5,13 @@ function Product(props) {
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        fetch(`http://localhost:3001/milk/${props.match.params.name}`).then(
-            (d) =>
-                d.json().then((fin) => {
-                    setProduct(fin);
-                })
+        setProduct(
+            props.milk.filter((v, i) => {
+                return i == props.match.params.name;
+            })[0]
         );
-    }, []);
+        console.log(product);
+    },[props.milk]);
     return (
         <Grid container direction="column" justify="center" alignItems="center">
             {product ? (

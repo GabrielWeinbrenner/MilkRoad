@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Milk from "../components/Milk";
-function ProductView({ product, color }) {
+function ProductView({ product, id }) {
     let history = useHistory();
     function redirect(name) {
         history.push(`/${name}`);
@@ -70,7 +70,7 @@ function ProductView({ product, color }) {
                     <Button
                         size="small"
                         onClick={() => {
-                            redirect("product" + product.name);
+                            redirect("product/" + id);
                         }}
                     >
                         Learn More

@@ -21,7 +21,6 @@ function Landing(props) {
                 setProducts(fin);
             })
         ); */
-        console.log(props.milk);
     }, []);
     return (
         <Grid container direction="column" justify="center" alignItems="center">
@@ -34,10 +33,9 @@ function Landing(props) {
                 <Grid container spacing={3}>
                     {true ? (
                         props.milk.map((product, i) => {
-                            console.log(product);
                             return (
                                 <Grid item xs={12} md={6}>
-                                    <ProductView key={i} product={product} />
+                                    <ProductView key={i} id={i} product={product} />
                                 </Grid>
                             );
                         })

@@ -88,7 +88,7 @@ function Milk(props) {
                 />
             </svg>
         );
-    }, []);
+    }, [props.color, classes.st0, classes.st1]);
     return milk;
 }
 

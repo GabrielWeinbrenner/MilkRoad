@@ -1,27 +1,7 @@
 import { Button, Grid, Typography } from "@material-ui/core";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import ProductView from "../components/ProductView";
-import Milk from "../components/Milk";
-import Web3 from "web3";
-
-function colorizer() {
-    var letters = "0123456789ABCDEF";
-    var color = "#";
-
-    for (var i = 0; i < 6; i++)
-        color += letters[Math.floor(Math.random() * 16)];
-    return color;
-}
-
 function Landing(props) {
-    const [products, setProducts] = useState(null);
-    useEffect(() => {
-        /*    fetch(`http://localhost:3001/milk/`).then((d) =>
-            d.json().then((fin) => {
-                setProducts(fin);
-            })
-        ); */
-    }, []);
     return (
         <Grid container direction="column" justify="center" alignItems="center">
             <Grid item>
@@ -34,8 +14,8 @@ function Landing(props) {
                     {true ? (
                         props.milk.map((product, i) => {
                             return (
-                                <Grid item xs={12} md={6}>
-                                    <ProductView key={i} id={i} product={product} />
+                                <Grid item xs={12} md={6} key={i}>
+                                    <ProductView id={i} product={product} />
                                 </Grid>
                             );
                         })

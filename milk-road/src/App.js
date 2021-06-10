@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Header from "./static/Header";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
 import Landing from "./pages/Landing";
 import Product from "./pages/Product";
 import ProductForm from "./pages/ProductForm";
 import Splice from "./pages/Splice";
+import Profile from "./pages/Profile";
+
 import Milk from "./build/contracts/Milk.json";
 
 import Web3 from "web3";
-// import theme from "./ui/Theme";
-import { ThemeProvider } from "@material-ui/core/styles";
+
+export const Eth = React.createContext();
 async function loadWeb3() {
     if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
@@ -27,13 +27,18 @@ async function loadWeb3() {
 function App() {
     const [account, setAccount] = useState(null);
     const [savedContract, setContract] = useState(null);
-    const [totalSupply, setTotalSupply] = useState(0);
     const [allMilks, setMilks] = useState([]);
-    async function _mint(account, name, desc, color, price) {
+
+    async function _mint(account, name, desc, color, price, history) {
         console.log("minting " + account + " " + name);
+
         await savedContract.methods
             .mint(name, desc, color, price)
-            .send({ from: account });
+            .send({ from: account })
+            .on("transactionHash", (hash) => {
+                history.push("/");
+                history.go(0);
+            });
     }
     async function loadBlockchainData() {
         const web3 = window.web3;
@@ -49,10 +54,6 @@ function App() {
             console.log(contract);
             await setContract(contract);
             const ts = await contract.methods.totalSupply().call();
-            console.log(ts);
-            setTotalSupply(ts);
-
-            const c = await contract.methods;
             for (var i = 1; i <= ts; i++) {
                 const milk = await contract.methods.milks(i - 1).call();
                 const token = await contract.methods.tokenByIndex(i - 1).call();
@@ -66,39 +67,55 @@ function App() {
         }
     }
 
-    useEffect(async () => {
-        await loadWeb3();
-        await loadBlockchainData();
+    useEffect(() => {
+        async function fetch() {
+            await loadWeb3();
+            await loadBlockchainData();
+        }
+        fetch();
     }, []);
 
     return (
-        // <ThemeProvider theme={theme}>
-        <BrowserRouter>
-            <Header id={account} />
-            <Switch>
-                <Route
-                    exact
-                    path="/"
-                    contract={savedContract}
-                    render={() => <Landing milk={allMilks} />}
-                />
-                <Route
-                    path="/product/:name"
-                    contract={savedContract}
-                    render={(props) => <Product {...props} contract={savedContract} milk={allMilks} />}
-                />
-                <Route
-                    exact
-                    path="/productform/"
-                    contract={savedContract}
-                    render={() => (
-                        <ProductForm account={account} mint={_mint} />
-                    )}
-                />
-                <Route path="/splice/:name" component={Splice} />
-            </Switch>
-        </BrowserRouter>
-        // </ThemeProvider>
+        <Eth.Provider
+            value={{
+                account,
+                savedContract,
+                allMilks,
+            }}
+        >
+            <BrowserRouter>
+                <Header id={account} />
+                <Switch>
+                    <Route
+                        exact
+                        path="/"
+                        contract={savedContract}
+                        render={() => <Landing milk={allMilks} />}
+                    />
+                    <Route
+                        path="/product/:name"
+                        contract={savedContract}
+                        render={(props) => (
+                            <Product
+                                {...props}
+                                contract={savedContract}
+                                milk={allMilks}
+                            />
+                        )}
+                    />
+                    <Route
+                        exact
+                        path="/productform/"
+                        contract={savedContract}
+                        render={() => (
+                            <ProductForm account={account} mint={_mint} />
+                        )}
+                    />
+                    <Route path="/splice/:name" component={Splice} />
+                    <Route path="/profile/:id" component={Profile} />
+                </Switch>
+            </BrowserRouter>
+        </Eth.Provider>
     );
 }
 

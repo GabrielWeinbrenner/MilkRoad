@@ -2,6 +2,7 @@ import { TextField, Typography, Grid, Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ChromePicker } from "react-color";
+
 function ProductForm(props) {
     const [product, setProduct] = useState({
         name: "",
@@ -9,10 +10,10 @@ function ProductForm(props) {
         price: 0,
         color: "",
     });
-    let history = useHistory();
 
+    let history = useHistory();
     function changeProduct(event, diff) {
-        if (diff == "color") {
+        if (diff === "color") {
             product[diff] = event.hex;
         } else {
             product[diff] = event.target.value;
@@ -26,10 +27,9 @@ function ProductForm(props) {
             product.name,
             product.description,
             product.color,
-            product.price
+            product.price,
+            history
         );
-        // history.push("/");
-        // history.go(0);
     }
     return (
         <>

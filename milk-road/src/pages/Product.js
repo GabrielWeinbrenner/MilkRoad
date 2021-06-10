@@ -7,11 +7,10 @@ function Product(props) {
     useEffect(() => {
         setProduct(
             props.milk.filter((v, i) => {
-                return i == props.match.params.name;
+                return i === props.match.params.name;
             })[0]
         );
-        console.log(product);
-    },[props.milk]);
+    },[props.milk, props.match.params.name]);
     return (
         <Grid container direction="column" justify="center" alignItems="center">
             {product ? (

@@ -9,8 +9,12 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import Milk from "../components/Milk";
-function ProductView({ product, id }) {
+
+import { Eth } from "../App.js";
+function ProductView({ product, id, currentAccount }) {
     let history = useHistory();
+
+    const ethVals = React.useContext(Eth);
     function redirect(name) {
         history.push(`/${name}`);
     }
@@ -26,7 +30,6 @@ function ProductView({ product, id }) {
             >
                 <CardContent>
                     <Grid container direction="row" justify="space-between">
-                                                
                         <Grid item>
                             <Grid container direction="column">
                                 <Grid item>
@@ -57,7 +60,7 @@ function ProductView({ product, id }) {
                                 </Grid>
                             </Grid>
                         </Grid>
-                         
+
                         <Grid item>
                             {/* <img src={milk} width={100} /> */}
                             <div style={{ width: 100 }}>
@@ -75,14 +78,18 @@ function ProductView({ product, id }) {
                     >
                         Learn More
                     </Button>
-                    <Button
-                        size="small"
-                        onClick={() => {
-                            redirect(`splice/${product.name}`);
-                        }}
-                    >
-                        Splice
-                    </Button>
+                    {ethVals.account === product.sellerAddress ? (
+                        <Button
+                            size="small"
+                            onClick={() => {
+                                redirect(`splice/${product.name}`);
+                            }}
+                        >
+                            Splice
+                        </Button>
+                    ) : (
+                        <div></div>
+                    )}
                 </CardActions>
             </Card>
         );

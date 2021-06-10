@@ -8,7 +8,6 @@ import useScrollTrigger from "@material-ui/core/useScrollTrigger";
 
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
-import { useTheme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -83,15 +82,13 @@ const Header = (props) => {
                                 component={Link}
                                 to="/"
                                 label="View"
-                                value="0"
-                                index={0}
+                                value={false}
                             />
                             <Tab
                                 component={Link}
                                 to="/productform"
                                 label="Add"
-                                value="1"
-                                index={1}
+                                value={false}
                             />
 
                         </Tabs>
